@@ -1,20 +1,19 @@
 package com.ohc.localmanager.dao.vo;
 
-import java.security.Timestamp;
-
 /**
  * 연락처 VO 클래스
  * @author 오현철
  * @date 2026.06.17
- * (구조) ID, 이름, 전화번호, 이메일, 주소, 메모, 생성일시, 수정일시
+ * (구조) ID, 회사, 부서, 이름, 전화번호, 이메일, 메모, 생성일시, 수정일시
  */
 public class CallbookVo {
 
     private int id;
+    private String company;
+    private String department;
     private String name;
     private String phoneNumber;
     private String email;
-    private String address;
     private String memo;
     private String createdAt;
     private String updatedAt;
@@ -25,6 +24,18 @@ public class CallbookVo {
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public String getCompany() {
+        return company;
+    }
+    public void setCompany(String company) {
+        this.company = company;
+    }
+    public String getDepartment() {
+        return department;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
     }
     public String getName() {
         return name;
@@ -43,12 +54,6 @@ public class CallbookVo {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
     }
     public String getMemo() {
         return memo;

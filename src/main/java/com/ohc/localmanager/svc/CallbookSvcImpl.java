@@ -28,4 +28,22 @@ public class CallbookSvcImpl implements CallbookSvc {
         logger.info("--- (SERVICE) CallbookSvcImpl.getCallbooks()");
         return callbookDao.getCallbooks();
     }
+
+    @Override
+    public int addCallbook(String company, String department, String name, String phoneNumber, String email, String memo) {
+        logger.info("--- (SERVICE) CallbookSvcImpl.addCallbook()");
+        return callbookDao.addCallbook(company, department, name, phoneNumber, email, memo);
+    }
+
+    @Override
+    public int updateCallbook(int id, String company, String department, String name, String phoneNumber, String email, String memo) {
+        logger.info("--- (SERVICE) CallbookSvcImpl.updateCallbook()");
+        return callbookDao.updateCallbook(id, company, department, name, phoneNumber, email, memo);
+    }
+
+    @Override
+    public int deleteCallbook(int id) {
+        logger.info("--- (SERVICE) CallbookSvcImpl.deleteCallbook()");
+        return callbookDao.deleteCallbook(id);
+    }
 }

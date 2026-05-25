@@ -23,4 +23,36 @@ public interface CallbookSvc {
      */
     public List<CallbookVo> getCallbooks();
 
+    /**
+     * 연락처 추가
+     * @param company 회사
+     * @param department 부서
+     * @param name 이름
+     * @param phoneNumber 전화번호
+     * @param email 이메일
+     * @param memo 메모
+     * @return 추가 결과
+     */
+    public int addCallbook(String company, String department, String name, String phoneNumber, String email, String memo);
+
+    /**
+     * 연락처 수정
+     * @param id 연락처 ID
+     * @param company 회사
+     * @param department 부서
+     * @param name 이름
+     * @param phoneNumber 전화번호
+     * @param email 이메일
+     * @param memo 메모
+     * @return 수정 결과
+     */
+    public int updateCallbook(int id, String company, String department, String name, String phoneNumber, String email, String memo);
+
+    /**
+     * 연락처 삭제
+     * @param id 연락처 ID
+     * @return 삭제 결과
+     */
+    public int deleteCallbook(int id);
+
 }
