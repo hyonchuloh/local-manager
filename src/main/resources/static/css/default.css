@@ -1,0 +1,10 @@
+body {
+	font-family:'NanumHuman' !important;
+	font-size: 11pt !important;
+	line-height: 180%;
+	background-color: #FCFCF0;
+}
+
+h1 {
+	color: #011144;		   /* 글자색 */
+}

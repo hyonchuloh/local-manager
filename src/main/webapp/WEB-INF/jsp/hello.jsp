@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Hello JSP</title>
+    <link rel="stylesheet" type="text/css" href="/css/default.css" />
 </head>
 <body>
 <h1>${message}</h1>
