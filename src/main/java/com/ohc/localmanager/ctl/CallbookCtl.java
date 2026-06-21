@@ -1,5 +1,7 @@
 package com.ohc.localmanager.ctl;
 
+import java.net.http.HttpResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -85,6 +87,14 @@ public class CallbookCtl {
         logger.info("--- (RESULT) {}", result);
         logger.info("----------------------------------------");
         return "redirect:/callbook";
+    }
+
+    /**
+     * 연락처 정보를 엑셀로 다운로드 하는 기능
+     */
+    @GetMapping("/callbook/download")
+    public void downloadCallbook() {
+        
     }
 
 }
