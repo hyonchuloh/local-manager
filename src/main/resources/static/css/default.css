@@ -43,7 +43,7 @@ h1 {
 }
 
 table {
-	width: 98%;
+	width: 100%; /* 테이블 너비를 100%로 설정 */
 	margin: 10px auto; /* 테이블을 가운데 정렬 */
 	border-collapse: collapse; /* 테이블 셀 간의 간격 제거 */
 	border-style:solid;
