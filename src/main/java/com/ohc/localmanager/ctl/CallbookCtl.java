@@ -2,7 +2,6 @@ package com.ohc.localmanager.ctl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -22,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CallbookCtl {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private CallbookSvc callbookSvc;
+    private final CallbookSvc callbookSvc;
+
+    public CallbookCtl(CallbookSvc callbookSvc) {
+        this.callbookSvc = callbookSvc;
+    }
 
     @GetMapping("/callbook")
     public String getCallbook(Model model) {

@@ -2,7 +2,6 @@ package com.ohc.localmanager.svc;
 
 import java.util.List;
 
-import com.ohc.localmanager.dao.CallbookDao;
 import com.ohc.localmanager.dao.vo.CallbookVo;
 
 /**

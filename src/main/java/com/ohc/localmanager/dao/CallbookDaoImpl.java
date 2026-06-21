@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ohc.localmanager.dao.vo.CallbookVo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -19,9 +18,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Repository
 public class CallbookDaoImpl implements CallbookDao {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public CallbookDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void initialize() {

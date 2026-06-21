@@ -2,20 +2,23 @@ package com.ohc.localmanager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import jakarta.annotation.PostConstruct;
+import com.ohc.localmanager.svc.CallbookSvc;
 
 @SpringBootApplication
 public class LocalManagerApplication extends SpringBootServletInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalManagerApplication.class);
-    @Autowired
-    private com.ohc.localmanager.svc.CallbookSvc callbookSvc;
+    private final CallbookSvc callbookSvc;
+
+    public LocalManagerApplication(CallbookSvc callbookSvc) {
+        this.callbookSvc = callbookSvc;
+    }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
