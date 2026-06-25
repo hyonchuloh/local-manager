@@ -1,0 +1,124 @@
+package com.ohc.localmanager.dao;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Repository;
+
+import com.ohc.localmanager.dao.vo.ExcelDataVo;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+/**
+ * 엑셀 데이터 DAO 구현 클래스
+ * @author 오현철
+ * @date 2026.06.25
+ */
+@Repository
+public class ExcelDataDaoImpl implements ExcelDataDao {
+
+    private final JdbcTemplate jdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public ExcelDataDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public void initialize() {
+        logger.info("--- (DAO) 엑셀 데이터 DB 초기화 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 초기화(이미 존재하는 경우 무시) */");
+        sql.append("\n\tCREATE TABLE IF NOT EXISTS LOCAL_MANAGER_EXCEL_DB");
+        sql.append("\n\t(SEQ_NUM INTEGER PRIMARY KEY AUTOINCREMENT, CATEGORY VARCHAR(255) NOT NULL, DATA TEXT, UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, UPDATE_USER VARCHAR(255))");
+        logger.info("--- {}\n", sql.toString());
+        jdbcTemplate.execute(sql.toString());
+        logger.info("--- (DAO) 엑셀 데이터 DB 초기화 완료");
+
+        // '직원대장' 카테고리의 데이터가 존재하지 않는 경우 샘플 데이터 삽입
+        if (getExcelDataList("직원대장").isEmpty()) {
+            logger.info("--- (DAO) 엑셀 데이터 DB 샘플 데이터 삽입 시작");
+            sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 샘플 데이터 삽입 */");
+            sql.append("\n\tINSERT INTO LOCAL_MANAGER_EXCEL_DB (SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER)");
+            sql.append("\n\tVALUES (1, '직원대장', '1, 2020200, 홍길동, G4, 팀원, 8-6684, 01094945642, hyonchul.oh@bok.or.kr, ' || date('now','localtime') || ', admin', datetime('now','localtime'), 'admin')");
+            logger.info("--- {}\n", sql.toString());
+            jdbcTemplate.execute(sql.toString());
+            logger.info("--- (DAO) 엑셀 데이터 DB 샘플 데이터 삽입 완료");
+        }
+    }
+
+    @Override
+    public List<ExcelDataVo> getExcelDataList(String category) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 카테고리별 조회 */");
+        sql.append("\n\tSELECT SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER FROM LOCAL_MANAGER_EXCEL_DB WHERE CATEGORY = ? ORDER BY SEQ_NUM");
+        logger.info("--- {}\n", sql.toString());
+        List<ExcelDataVo> list = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> mapRow(rs), category);
+        logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 완료");
+        return list;
+    }
+
+    @Override
+    public ExcelDataVo getExcelData(int seqNum) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 단건 조회 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 단건 조회 */");
+        sql.append("\n\tSELECT SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER FROM LOCAL_MANAGER_EXCEL_DB WHERE SEQ_NUM = ?");
+        logger.info("--- {}\n", sql.toString());
+        try {
+            ExcelDataVo data = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> mapRow(rs), seqNum);
+            logger.info("--- (DAO) 엑셀 데이터 DB 단건 조회 완료");
+            return data;
+        } catch (EmptyResultDataAccessException e) {
+            logger.info("--- (DAO) 엑셀 데이터 DB 단건 조회 결과 없음 (seqNum={})", seqNum);
+            return null;
+        }
+    }
+
+    @Override
+    public int addExcelData(String category, String data, String updateUser) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 추가 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 추가 */");
+        sql.append("\n\tINSERT INTO LOCAL_MANAGER_EXCEL_DB (CATEGORY, DATA, UPDATE_USER) VALUES (?, ?, ?)");
+        logger.info("--- {}\n", sql.toString());
+        int result = jdbcTemplate.update(sql.toString(), category, data, updateUser);
+        logger.info("--- (DAO) 엑셀 데이터 DB 추가 완료");
+        return result;
+    }
+
+    @Override
+    public int updateExcelData(int seqNum, String data, String updateUser) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 수정 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 수정 */");
+        sql.append("\n\tUPDATE LOCAL_MANAGER_EXCEL_DB SET DATA = ?, UPDATE_USER = ?, UPDATE_DATE = CURRENT_TIMESTAMP WHERE SEQ_NUM = ?");
+        logger.info("--- {}\n", sql.toString());
+        int result = jdbcTemplate.update(sql.toString(), data, updateUser, seqNum);
+        logger.info("--- (DAO) 엑셀 데이터 DB 수정 완료");
+        return result;
+    }
+
+    @Override
+    public int deleteExcelData(int seqNum) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 삭제 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 삭제 */");
+        sql.append("\n\tDELETE FROM LOCAL_MANAGER_EXCEL_DB WHERE SEQ_NUM = ?");
+        logger.info("--- {}\n", sql.toString());
+        int result = jdbcTemplate.update(sql.toString(), seqNum);
+        logger.info("--- (DAO) 엑셀 데이터 DB 삭제 완료");
+        return result;
+    }
+
+    /**
+     * ResultSet -> ExcelDataVo 매핑
+     */
+    private ExcelDataVo mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
+        ExcelDataVo data = new ExcelDataVo();
+        data.setSeqNum(rs.getInt("SEQ_NUM"));
+        data.setCategory(rs.getString("CATEGORY"));
+        data.setData(rs.getString("DATA"));
+        data.setUpdateDate(rs.getString("UPDATE_DATE"));
+        data.setUpdateUser(rs.getString("UPDATE_USER"));
+        return data;
+    }
+
+}
