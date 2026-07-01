@@ -26,6 +26,9 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * 엑셀 데이터 테이블 생성(없으면) 및 샘플 데이터('직원대장') 삽입
+     */
     @Override
     public void initialize() {
         logger.info("--- (DAO) 엑셀 데이터 DB 초기화 시작");
@@ -48,6 +51,9 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
         }
     }
 
+    /**
+     * 카테고리별 엑셀 데이터 조회 (순번순)
+     */
     @Override
     public List<ExcelDataVo> getExcelDataList(String category) {
         logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 시작");
@@ -59,6 +65,9 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
         return list;
     }
 
+    /**
+     * 엑셀 데이터 단건 조회 (없으면 null)
+     */
     @Override
     public ExcelDataVo getExcelData(int seqNum) {
         logger.info("--- (DAO) 엑셀 데이터 DB 단건 조회 시작");
@@ -75,6 +84,9 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
         }
     }
 
+    /**
+     * 엑셀 데이터 1건 추가
+     */
     @Override
     public int addExcelData(String category, String data, String updateUser) {
         logger.info("--- (DAO) 엑셀 데이터 DB 추가 시작");
@@ -86,6 +98,9 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
         return result;
     }
 
+    /**
+     * 엑셀 데이터 1건 수정 (수정일시 자동 갱신)
+     */
     @Override
     public int updateExcelData(int seqNum, String data, String updateUser) {
         logger.info("--- (DAO) 엑셀 데이터 DB 수정 시작");
@@ -97,6 +112,9 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
         return result;
     }
 
+    /**
+     * 엑셀 데이터 1건 삭제
+     */
     @Override
     public int deleteExcelData(int seqNum) {
         logger.info("--- (DAO) 엑셀 데이터 DB 삭제 시작");

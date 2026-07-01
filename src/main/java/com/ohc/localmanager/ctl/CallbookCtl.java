@@ -1,7 +1,5 @@
 package com.ohc.localmanager.ctl;
 
-import java.net.http.HttpResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,6 +27,9 @@ public class CallbookCtl {
         this.callbookSvc = callbookSvc;
     }
 
+    /**
+     * 연락처 목록 화면 조회
+     */
     @GetMapping("/callbook")
     public String getCallbook(Model model) {
         logger.info("----------------------------------------");
@@ -39,6 +40,9 @@ public class CallbookCtl {
         return "callbook/callbook";
     }
 
+    /**
+     * 연락처 신규 등록 후 목록으로 redirect
+     */
     @PostMapping("/callbook/insert")
     public String insertCallbook(
         @RequestParam(value = "company", required = false) String company,
@@ -57,8 +61,11 @@ public class CallbookCtl {
         return "redirect:/callbook";
     }
 
+    /**
+     * 연락처 수정 후 목록으로 redirect
+     */
     @PostMapping("/callbook/update/{id}")
-    public String updateCallbook(   
+    public String updateCallbook(
         @PathVariable("id") int id,
         @RequestParam(value = "company", required = false) String company,
         @RequestParam(value = "department", required = false) String department,
@@ -76,8 +83,11 @@ public class CallbookCtl {
         return "redirect:/callbook";
     }
 
+    /**
+     * 연락처 삭제 후 목록으로 redirect
+     */
     @PostMapping("/callbook/delete/{id}")
-    public String deleteCallbook(   
+    public String deleteCallbook(
         @PathVariable("id") int id,
         Model model) {
         logger.info("----------------------------------------");

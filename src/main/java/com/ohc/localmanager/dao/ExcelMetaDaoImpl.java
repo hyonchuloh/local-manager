@@ -26,6 +26,9 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * 엑셀 메타 테이블 생성(없으면) 및 샘플 카테고리('직원대장') 삽입
+     */
     @Override
     public void initialize() {
         logger.info("--- (DAO) 엑셀 메타 DB 초기화 시작");
@@ -48,6 +51,9 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
         }
     }
 
+    /**
+     * 엑셀 메타(카테고리) 전체 조회 (생성일순)
+     */
     @Override
     public List<ExcelMetaVo> getExcelMetas() {
         logger.info("--- (DAO) 엑셀 메타 DB 조회 시작");
@@ -59,6 +65,9 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
         return metas;
     }
 
+    /**
+     * 엑셀 메타(카테고리) 단건 조회 (없으면 null)
+     */
     @Override
     public ExcelMetaVo getExcelMeta(String category) {
         logger.info("--- (DAO) 엑셀 메타 DB 단건 조회 시작");
@@ -75,6 +84,9 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
         }
     }
 
+    /**
+     * 엑셀 메타(카테고리) 1건 추가
+     */
     @Override
     public int addExcelMeta(String category, String metaInfo, String createUser) {
         logger.info("--- (DAO) 엑셀 메타 DB 추가 시작");
@@ -86,6 +98,9 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
         return result;
     }
 
+    /**
+     * 엑셀 메타(카테고리)의 메타정보(컬럼목록) 수정
+     */
     @Override
     public int updateExcelMeta(String category, String metaInfo) {
         logger.info("--- (DAO) 엑셀 메타 DB 수정 시작");
@@ -97,6 +112,9 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
         return result;
     }
 
+    /**
+     * 엑셀 메타(카테고리) 삭제
+     */
     @Override
     public int deleteExcelMeta(String category) {
         logger.info("--- (DAO) 엑셀 메타 DB 삭제 시작");

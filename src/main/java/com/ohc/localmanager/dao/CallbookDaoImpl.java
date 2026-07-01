@@ -25,6 +25,9 @@ public class CallbookDaoImpl implements CallbookDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * 연락처 테이블 생성(없으면) 및 샘플 데이터('홍길동') 삽입
+     */
     @Override
     public void initialize() {
 
@@ -54,6 +57,9 @@ public class CallbookDaoImpl implements CallbookDao {
         
     }
 
+    /**
+     * 연락처 전체 조회
+     */
     @Override
     public List<CallbookVo> getCallbooks() {
         logger.info("--- (DAO) 연락처 DB 조회 시작");
@@ -77,6 +83,9 @@ public class CallbookDaoImpl implements CallbookDao {
         return callbooks;
     }
 
+    /**
+     * 연락처 1건 추가
+     */
     @Override
     public int addCallbook(String company, String department, String name, String phoneNumber, String email, String memo) {
         logger.info("--- (DAO) 연락처 DB 추가 시작");
@@ -88,6 +97,9 @@ public class CallbookDaoImpl implements CallbookDao {
         return result;
     }
 
+    /**
+     * 연락처 1건 수정 (수정일시 자동 갱신)
+     */
     @Override
     public int updateCallbook(int id, String company, String department, String name, String phoneNumber, String email, String memo) {
         logger.info("--- (DAO) 연락처 DB 수정 시작");
@@ -99,6 +111,9 @@ public class CallbookDaoImpl implements CallbookDao {
         return result;
     }
 
+    /**
+     * 연락처 1건 삭제
+     */
     @Override
     public int deleteCallbook(int id) {
         logger.info("--- (DAO) 연락처 DB 삭제 시작");

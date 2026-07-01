@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DefaultCtl {
 
+    /**
+     * 루트(/) 접속 시 메인 화면(index) 반환
+     */
     @GetMapping("/")
     public String index(Model model) {
         

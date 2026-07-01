@@ -16,6 +16,9 @@ class JspController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
+    /**
+     * JSP 뷰 렌더링 예제 - 모델에 메시지를 담아 hello 뷰 반환
+     */
     @GetMapping("/api/jsp")
     public String helloJsp(Model model) {
         logger.info("----------------------------------------");
@@ -34,6 +37,9 @@ class ApiHelloController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
+    /**
+     * REST API 예제 - JSON 형태의 인사 메시지 반환
+     */
     @GetMapping("/hello")
     public Map<String, String> hello() {
         logger.info("----------------------------------------");

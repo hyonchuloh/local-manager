@@ -22,6 +22,11 @@ import com.ohc.localmanager.dao.vo.ExcelGridRowVo;
 import com.ohc.localmanager.dao.vo.ExcelGridVo;
 import com.ohc.localmanager.dao.vo.ExcelMetaVo;
 
+/**
+ * 엑셀 데이터 서비스 구현 클래스 (그리드 조합, audit 컬럼 자동채움, xlsx 생성)
+ * @author 오현철
+ * @date 2026.06.25
+ */
 @Service
 public class ExcelDataSvcImpl implements ExcelDataSvc {
 
@@ -34,12 +39,18 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
         this.excelMetaSvc = excelMetaSvc;
     }
 
+    /**
+     * 엑셀 데이터 테이블 초기화
+     */
     @Override
     public void initialize() {
         logger.info("--- (SERVICE) ExcelDataSvcImpl.initialize()");
         excelDataDao.initialize();
     }
 
+    /**
+     * 메타정보(컬럼) + 데이터(행)를 조합하여 그리드 화면용 VO 생성
+     */
     @Override
     public ExcelGridVo getExcelGrid(String category) {
         logger.info("--- (SERVICE) ExcelDataSvcImpl.getExcelGrid()");
@@ -66,12 +77,18 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
         return grid;
     }
 
+    /**
+     * 엑셀 데이터 추가 (수정일자/수정자 컬럼 자동채움 후 저장)
+     */
     @Override
     public int addExcelData(String category, String data, String updateUser) {
         logger.info("--- (SERVICE) ExcelDataSvcImpl.addExcelData()");
         return excelDataDao.addExcelData(category, applyAuditColumns(category, data, updateUser), updateUser);
     }
 
+    /**
+     * 엑셀 데이터 수정 (수정일자/수정자 컬럼 자동채움 후 저장)
+     */
     @Override
     public int updateExcelData(int seqNum, String category, String data, String updateUser) {
         logger.info("--- (SERVICE) ExcelDataSvcImpl.updateExcelData()");
@@ -109,12 +126,18 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
         return String.join(", ", cells);
     }
 
+    /**
+     * 엑셀 데이터 삭제
+     */
     @Override
     public int deleteExcelData(int seqNum) {
         logger.info("--- (SERVICE) ExcelDataSvcImpl.deleteExcelData()");
         return excelDataDao.deleteExcelData(seqNum);
     }
 
+    /**
+     * 그리드(컬럼 헤더 + 데이터 행)를 Apache POI로 xlsx 파일 바이트로 생성
+     */
     @Override
     public byte[] buildExcelFile(String category) {
         logger.info("--- (SERVICE) ExcelDataSvcImpl.buildExcelFile()");
