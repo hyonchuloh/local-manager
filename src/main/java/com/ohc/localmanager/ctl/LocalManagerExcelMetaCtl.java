@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import com.ohc.localmanager.svc.ExcelMetaSvc;
+import com.ohc.localmanager.svc.LocalManagerExcelMetaSvc;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2026.06.25
  */
 @Controller
-public class ExcelMetaCtl {
+public class LocalManagerExcelMetaCtl {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final ExcelMetaSvc excelMetaSvc;
+    private final LocalManagerExcelMetaSvc excelMetaSvc;
 
-    public ExcelMetaCtl(ExcelMetaSvc excelMetaSvc) {
+    public LocalManagerExcelMetaCtl(LocalManagerExcelMetaSvc excelMetaSvc) {
         this.excelMetaSvc = excelMetaSvc;
     }
 

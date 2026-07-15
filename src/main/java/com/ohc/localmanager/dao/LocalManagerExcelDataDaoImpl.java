@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
-import com.ohc.localmanager.dao.vo.ExcelDataVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelDataVo;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -17,12 +17,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @date 2026.06.25
  */
 @Repository
-public class ExcelDataDaoImpl implements ExcelDataDao {
+public class LocalManagerExcelDataDaoImpl implements LocalManagerExcelDataDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public ExcelDataDaoImpl(JdbcTemplate jdbcTemplate) {
+    public LocalManagerExcelDataDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -55,12 +55,12 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
      * 카테고리별 엑셀 데이터 조회 (순번순)
      */
     @Override
-    public List<ExcelDataVo> getExcelDataList(String category) {
+    public List<LocalManagerExcelDataVo> getExcelDataList(String category) {
         logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 시작");
         StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 카테고리별 조회 */");
         sql.append("\n\tSELECT SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER FROM LOCAL_MANAGER_EXCEL_DB WHERE CATEGORY = ? ORDER BY SEQ_NUM");
         logger.info("--- {}\n", sql.toString());
-        List<ExcelDataVo> list = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> mapRow(rs), category);
+        List<LocalManagerExcelDataVo> list = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> mapRow(rs), category);
         logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 완료");
         return list;
     }
@@ -69,13 +69,13 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
      * 엑셀 데이터 단건 조회 (없으면 null)
      */
     @Override
-    public ExcelDataVo getExcelData(int seqNum) {
+    public LocalManagerExcelDataVo getExcelData(int seqNum) {
         logger.info("--- (DAO) 엑셀 데이터 DB 단건 조회 시작");
         StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 단건 조회 */");
         sql.append("\n\tSELECT SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER FROM LOCAL_MANAGER_EXCEL_DB WHERE SEQ_NUM = ?");
         logger.info("--- {}\n", sql.toString());
         try {
-            ExcelDataVo data = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> mapRow(rs), seqNum);
+            LocalManagerExcelDataVo data = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> mapRow(rs), seqNum);
             logger.info("--- (DAO) 엑셀 데이터 DB 단건 조회 완료");
             return data;
         } catch (EmptyResultDataAccessException e) {
@@ -127,10 +127,10 @@ public class ExcelDataDaoImpl implements ExcelDataDao {
     }
 
     /**
-     * ResultSet -> ExcelDataVo 매핑
+     * ResultSet -> LocalManagerExcelDataVo 매핑
      */
-    private ExcelDataVo mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
-        ExcelDataVo data = new ExcelDataVo();
+    private LocalManagerExcelDataVo mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
+        LocalManagerExcelDataVo data = new LocalManagerExcelDataVo();
         data.setSeqNum(rs.getInt("SEQ_NUM"));
         data.setCategory(rs.getString("CATEGORY"));
         data.setData(rs.getString("DATA"));

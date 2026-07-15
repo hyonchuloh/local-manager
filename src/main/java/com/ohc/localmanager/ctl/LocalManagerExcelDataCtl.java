@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ohc.localmanager.svc.ExcelDataSvc;
+import com.ohc.localmanager.svc.LocalManagerExcelDataSvc;
 
 /**
  * 엑셀 데이터 컨트롤러 (카테고리 선택 시 팝업 그리드 조회/CRUD)
@@ -23,12 +23,12 @@ import com.ohc.localmanager.svc.ExcelDataSvc;
  * @date 2026.06.25
  */
 @Controller
-public class ExcelDataCtl {
+public class LocalManagerExcelDataCtl {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final ExcelDataSvc excelDataSvc;
+    private final LocalManagerExcelDataSvc excelDataSvc;
 
-    public ExcelDataCtl(ExcelDataSvc excelDataSvc) {
+    public LocalManagerExcelDataCtl(LocalManagerExcelDataSvc excelDataSvc) {
         this.excelDataSvc = excelDataSvc;
     }
 

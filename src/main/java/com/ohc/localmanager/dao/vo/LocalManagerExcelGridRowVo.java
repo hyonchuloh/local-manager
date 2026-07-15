@@ -8,7 +8,7 @@ import java.util.List;
  * @date 2026.06.25
  * (구조) 순번, 셀목록(데이터 파싱), 수정일시, 수정자
  */
-public class ExcelGridRowVo {
+public class LocalManagerExcelGridRowVo {
 
     private int seqNum;
     private List<String> cells;

@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>엑셀 테이블 목록</title>
+    <title>엑셀 관리 테이블 목록</title>
     <link rel="stylesheet" type="text/css" href="/css/default.css" />
     <script>
         function searchTable() {
@@ -47,13 +47,16 @@
             window.open(
                 "/excel/data?category=" + encodeURIComponent(category),
                 "excelData",
-                "width=1100,height=650,scrollbars=yes,resizable=yes"
+                "width=1536,height=800,scrollbars=yes,resizable=yes"
             );
         }
     </script>
 </head>
 <body>
-    <h1>엑셀 테이블 목록</h1>
+    <h1>
+        <img src="/images/bok_logo.png" class="h1-image"/>&nbsp;
+        엑셀 관리 테이블 목록
+    </h1>
     <ul>
         <li>
             🔎 검색 <input type="text" id="searchInput" onkeyup="searchTable()" />

@@ -23,23 +23,46 @@
 }
 
 
+:root {
+	--content-width: 1920px;	/* 페이지별 body 폭을 재정의할 때 함께 재정의 */
+}
+
+* {
+	box-sizing: border-box;
+}
+
 body {
-	font-family:'NanumHuman' !important;
-	font-size: 11pt !important;
+	font-family:'d2coding';
+	font-size: 10pt;
 	line-height: 180%;
-	background-color: #FCFCF0;
 	margin: 0px 0px;
 	padding: 0px;
-
+	width: 1920px;
+	max-width: var(--content-width);
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox: 스크롤바 폭만큼 h1의 100vw 배경 계산이 어긋나는 것을 방지 */
+	background-color: #FCFCF0;
 }
 
 h1 {
-	color: #FAF0CA;		   /* 글자색 */
-	background-color: #0D3B66; /* 배경색 */
-	width: 100%;				/* 너비 */
-	margin: 0px; 				/* 바깥 여백*/
-	padding : 1rem; 		/* 안쪽 여백 */
-	box-sizing: border-box;		/* padding을 너비에 포함 */
+	font-family:'NanumHuman';
+	background-color: #222222;
+	color: #FCFCF0;		   /* 글자색 */
+	width: auto;				/* 너비: 아래 margin 계산으로 뷰포트 전체까지 확장 */
+	margin: 0px calc(min(0px, 50% - 50vw));	/* 바깥 여백: 뷰포트가 mainTable(콘텐츠 폭)보다 넓을 때만 좌우로 배경 확장, 좁을 땐 0으로 고정해 mainTable 폭 그대로 유지 */
+	padding: 1rem calc(max(0px, 50vw - (var(--content-width) / 2)) + 1rem);	/* 확장된 만큼 안쪽 여백을 더해 내용은 기존 위치 유지 */
+	padding-top : 10px; 		/* 안쪽 여백 */
+	padding-bottom : 10px;		/* 안쪽 여백 */
+	display: flex;				/* 자식 이미지와 텍스트의 세로 정렬 기준을 baseline이 아닌 flex 중앙으로 통일 */
+	align-items: center;
+}
+
+.h1-image {
+	border-radius: 70%;
+	width: 40px;
+	padding: 0px;
+	margin: 0px;
+	cursor: pointer;
 }
 
 table {

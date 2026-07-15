@@ -9,18 +9,18 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 import jakarta.annotation.PostConstruct;
 import com.ohc.localmanager.svc.CallbookSvc;
-import com.ohc.localmanager.svc.ExcelMetaSvc;
-import com.ohc.localmanager.svc.ExcelDataSvc;
+import com.ohc.localmanager.svc.LocalManagerExcelMetaSvc;
+import com.ohc.localmanager.svc.LocalManagerExcelDataSvc;
 
 @SpringBootApplication
 public class LocalManagerApplication extends SpringBootServletInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalManagerApplication.class);
     private final CallbookSvc callbookSvc;
-    private final ExcelMetaSvc excelMetaSvc;
-    private final ExcelDataSvc excelDataSvc;
+    private final LocalManagerExcelMetaSvc excelMetaSvc;
+    private final LocalManagerExcelDataSvc excelDataSvc;
 
-    public LocalManagerApplication(CallbookSvc callbookSvc, ExcelMetaSvc excelMetaSvc, ExcelDataSvc excelDataSvc) {
+    public LocalManagerApplication(CallbookSvc callbookSvc, LocalManagerExcelMetaSvc excelMetaSvc, LocalManagerExcelDataSvc excelDataSvc) {
         this.callbookSvc = callbookSvc;
         this.excelMetaSvc = excelMetaSvc;
         this.excelDataSvc = excelDataSvc;

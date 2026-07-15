@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
-import com.ohc.localmanager.dao.vo.ExcelMetaVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelMetaVo;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -17,12 +17,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @date 2026.06.25
  */
 @Repository
-public class ExcelMetaDaoImpl implements ExcelMetaDao {
+public class LocalManagerExcelMetaDaoImpl implements LocalManagerExcelMetaDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public ExcelMetaDaoImpl(JdbcTemplate jdbcTemplate) {
+    public LocalManagerExcelMetaDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -55,12 +55,12 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
      * 엑셀 메타(카테고리) 전체 조회 (생성일순)
      */
     @Override
-    public List<ExcelMetaVo> getExcelMetas() {
+    public List<LocalManagerExcelMetaVo> getExcelMetas() {
         logger.info("--- (DAO) 엑셀 메타 DB 조회 시작");
         StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 메타 DB 조회 */");
         sql.append("\n\tSELECT CATEGORY, META_INFO, CREATE_DATE, CREATE_USER FROM LOCAL_MANAGER_EXCEL_META ORDER BY CREATE_DATE");
         logger.info("--- {}\n", sql.toString());
-        List<ExcelMetaVo> metas = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> mapRow(rs));
+        List<LocalManagerExcelMetaVo> metas = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> mapRow(rs));
         logger.info("--- (DAO) 엑셀 메타 DB 조회 완료");
         return metas;
     }
@@ -69,13 +69,13 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
      * 엑셀 메타(카테고리) 단건 조회 (없으면 null)
      */
     @Override
-    public ExcelMetaVo getExcelMeta(String category) {
+    public LocalManagerExcelMetaVo getExcelMeta(String category) {
         logger.info("--- (DAO) 엑셀 메타 DB 단건 조회 시작");
         StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 메타 DB 단건 조회 */");
         sql.append("\n\tSELECT CATEGORY, META_INFO, CREATE_DATE, CREATE_USER FROM LOCAL_MANAGER_EXCEL_META WHERE CATEGORY = ?");
         logger.info("--- {}\n", sql.toString());
         try {
-            ExcelMetaVo meta = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> mapRow(rs), category);
+            LocalManagerExcelMetaVo meta = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> mapRow(rs), category);
             logger.info("--- (DAO) 엑셀 메타 DB 단건 조회 완료");
             return meta;
         } catch (EmptyResultDataAccessException e) {
@@ -127,10 +127,10 @@ public class ExcelMetaDaoImpl implements ExcelMetaDao {
     }
 
     /**
-     * ResultSet -> ExcelMetaVo 매핑
+     * ResultSet -> LocalManagerExcelMetaVo 매핑
      */
-    private ExcelMetaVo mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
-        ExcelMetaVo meta = new ExcelMetaVo();
+    private LocalManagerExcelMetaVo mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
+        LocalManagerExcelMetaVo meta = new LocalManagerExcelMetaVo();
         meta.setCategory(rs.getString("CATEGORY"));
         meta.setMetaInfo(rs.getString("META_INFO"));
         meta.setCreateDate(rs.getString("CREATE_DATE"));

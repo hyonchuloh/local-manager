@@ -6,7 +6,7 @@ package com.ohc.localmanager.dao.vo;
  * @date 2026.06.25
  * (구조) 순번, 카테고리, 데이터, 수정일시, 수정자
  */
-public class ExcelDataVo {
+public class LocalManagerExcelDataVo {
 
     private int seqNum;
     private String category;

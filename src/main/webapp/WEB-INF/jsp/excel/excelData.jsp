@@ -72,9 +72,26 @@
             location.href = "/excel/data/download?category=" + encodeURIComponent(CATEGORY);
         }
     </script>
+    <style>
+        /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
+        #mainTable tr:not(:first-child):hover {
+            background-color: #FFF9C4; /* 연한 노랑 */
+            transition: background-color 0.15s ease;
+        }
+        :root {
+            --content-width: 1536px;
+        }
+        body {
+            width: 1536px !important;
+            margin: 0px auto !important;
+        }
+    </style>
 </head>
 <body>
-    <h1>${grid.category}</h1>
+    <h1>
+        <img src="/images/bok_logo.png" class="h1-image"/>&nbsp;
+        ${grid.category}
+    </h1>
     <ul>
         <li>
             🔎 검색 <input type="text" id="searchInput" onkeyup="searchTable()" /> |

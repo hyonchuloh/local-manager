@@ -1,13 +1,13 @@
 package com.ohc.localmanager.svc;
 
-import com.ohc.localmanager.dao.vo.ExcelGridVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelGridVo;
 
 /**
  * 엑셀 데이터 서비스 인터페이스
  * @author 오현철
  * @date 2026.06.25
  */
-public interface ExcelDataSvc {
+public interface LocalManagerExcelDataSvc {
 
     /**
     * 엑셀 데이터 테이블 초기화
@@ -19,7 +19,7 @@ public interface ExcelDataSvc {
      * @param category 카테고리
      * @return 컬럼/행으로 조합된 그리드
      */
-    public ExcelGridVo getExcelGrid(String category);
+    public LocalManagerExcelGridVo getExcelGrid(String category);
 
     /**
      * 엑셀 데이터 추가

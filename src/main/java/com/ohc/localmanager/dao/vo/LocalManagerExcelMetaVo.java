@@ -6,7 +6,7 @@ package com.ohc.localmanager.dao.vo;
  * @date 2026.06.25
  * (구조) 카테고리, 메타정보(컬럼목록), 생성일시, 생성자
  */
-public class ExcelMetaVo {
+public class LocalManagerExcelMetaVo {
 
     private String category;
     private String metaInfo;

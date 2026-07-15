@@ -2,14 +2,14 @@ package com.ohc.localmanager.svc;
 
 import java.util.List;
 
-import com.ohc.localmanager.dao.vo.ExcelMetaVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelMetaVo;
 
 /**
  * 엑셀 메타(카테고리) 서비스 인터페이스
  * @author 오현철
  * @date 2026.06.25
  */
-public interface ExcelMetaSvc {
+public interface LocalManagerExcelMetaSvc {
 
     /**
     * 엑셀 메타 테이블 초기화
@@ -20,14 +20,14 @@ public interface ExcelMetaSvc {
      * 엑셀 카테고리 전체 조회 (최초 진입점 목록)
      * @return 카테고리 전체 리스트
      */
-    public List<ExcelMetaVo> getExcelMetas();
+    public List<LocalManagerExcelMetaVo> getExcelMetas();
 
     /**
      * 엑셀 카테고리 단건 조회
      * @param category 카테고리
      * @return 메타 정보 (없으면 null)
      */
-    public ExcelMetaVo getExcelMeta(String category);
+    public LocalManagerExcelMetaVo getExcelMeta(String category);
 
     /**
      * 엑셀 카테고리 신규 생성

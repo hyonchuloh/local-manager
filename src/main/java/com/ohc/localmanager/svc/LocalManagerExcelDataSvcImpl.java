@@ -16,11 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ohc.localmanager.dao.ExcelDataDao;
-import com.ohc.localmanager.dao.vo.ExcelDataVo;
-import com.ohc.localmanager.dao.vo.ExcelGridRowVo;
-import com.ohc.localmanager.dao.vo.ExcelGridVo;
-import com.ohc.localmanager.dao.vo.ExcelMetaVo;
+import com.ohc.localmanager.dao.LocalManagerExcelDataDao;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelDataVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelGridRowVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelGridVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelMetaVo;
 
 /**
  * 엑셀 데이터 서비스 구현 클래스 (그리드 조합, audit 컬럼 자동채움, xlsx 생성)
@@ -28,13 +28,13 @@ import com.ohc.localmanager.dao.vo.ExcelMetaVo;
  * @date 2026.06.25
  */
 @Service
-public class ExcelDataSvcImpl implements ExcelDataSvc {
+public class LocalManagerExcelDataSvcImpl implements LocalManagerExcelDataSvc {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final ExcelDataDao excelDataDao;
-    private final ExcelMetaSvc excelMetaSvc;
+    private final LocalManagerExcelDataDao excelDataDao;
+    private final LocalManagerExcelMetaSvc excelMetaSvc;
 
-    public ExcelDataSvcImpl(ExcelDataDao excelDataDao, ExcelMetaSvc excelMetaSvc) {
+    public LocalManagerExcelDataSvcImpl(LocalManagerExcelDataDao excelDataDao, LocalManagerExcelMetaSvc excelMetaSvc) {
         this.excelDataDao = excelDataDao;
         this.excelMetaSvc = excelMetaSvc;
     }
@@ -44,7 +44,7 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      */
     @Override
     public void initialize() {
-        logger.info("--- (SERVICE) ExcelDataSvcImpl.initialize()");
+        logger.info("--- (SERVICE) LocalManagerExcelDataSvcImpl.initialize()");
         excelDataDao.initialize();
     }
 
@@ -52,20 +52,20 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      * 메타정보(컬럼) + 데이터(행)를 조합하여 그리드 화면용 VO 생성
      */
     @Override
-    public ExcelGridVo getExcelGrid(String category) {
-        logger.info("--- (SERVICE) ExcelDataSvcImpl.getExcelGrid()");
+    public LocalManagerExcelGridVo getExcelGrid(String category) {
+        logger.info("--- (SERVICE) LocalManagerExcelDataSvcImpl.getExcelGrid()");
 
-        ExcelGridVo grid = new ExcelGridVo();
+        LocalManagerExcelGridVo grid = new LocalManagerExcelGridVo();
         grid.setCategory(category);
 
         // 컬럼 = 메타정보(컬럼목록) 파싱
-        ExcelMetaVo meta = excelMetaSvc.getExcelMeta(category);
+        LocalManagerExcelMetaVo meta = excelMetaSvc.getExcelMeta(category);
         grid.setColumns(meta == null ? new ArrayList<>() : splitCsv(meta.getMetaInfo()));
 
         // 행 = 카테고리별 데이터 파싱
-        List<ExcelGridRowVo> rows = new ArrayList<>();
-        for (ExcelDataVo data : excelDataDao.getExcelDataList(category)) {
-            ExcelGridRowVo row = new ExcelGridRowVo();
+        List<LocalManagerExcelGridRowVo> rows = new ArrayList<>();
+        for (LocalManagerExcelDataVo data : excelDataDao.getExcelDataList(category)) {
+            LocalManagerExcelGridRowVo row = new LocalManagerExcelGridRowVo();
             row.setSeqNum(data.getSeqNum());
             row.setCells(splitCsv(data.getData()));
             row.setUpdateDate(data.getUpdateDate());
@@ -82,7 +82,7 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      */
     @Override
     public int addExcelData(String category, String data, String updateUser) {
-        logger.info("--- (SERVICE) ExcelDataSvcImpl.addExcelData()");
+        logger.info("--- (SERVICE) LocalManagerExcelDataSvcImpl.addExcelData()");
         return excelDataDao.addExcelData(category, applyAuditColumns(category, data, updateUser), updateUser);
     }
 
@@ -91,7 +91,7 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      */
     @Override
     public int updateExcelData(int seqNum, String category, String data, String updateUser) {
-        logger.info("--- (SERVICE) ExcelDataSvcImpl.updateExcelData()");
+        logger.info("--- (SERVICE) LocalManagerExcelDataSvcImpl.updateExcelData()");
         return excelDataDao.updateExcelData(seqNum, applyAuditColumns(category, data, updateUser), updateUser);
     }
 
@@ -105,7 +105,7 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      * @return 수정일자/수정자가 자동 반영된 데이터
      */
     private String applyAuditColumns(String category, String data, String updateUser) {
-        ExcelMetaVo meta = excelMetaSvc.getExcelMeta(category);
+        LocalManagerExcelMetaVo meta = excelMetaSvc.getExcelMeta(category);
         if (meta == null) {
             return data;
         }
@@ -131,7 +131,7 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      */
     @Override
     public int deleteExcelData(int seqNum) {
-        logger.info("--- (SERVICE) ExcelDataSvcImpl.deleteExcelData()");
+        logger.info("--- (SERVICE) LocalManagerExcelDataSvcImpl.deleteExcelData()");
         return excelDataDao.deleteExcelData(seqNum);
     }
 
@@ -140,8 +140,8 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
      */
     @Override
     public byte[] buildExcelFile(String category) {
-        logger.info("--- (SERVICE) ExcelDataSvcImpl.buildExcelFile()");
-        ExcelGridVo grid = getExcelGrid(category);
+        logger.info("--- (SERVICE) LocalManagerExcelDataSvcImpl.buildExcelFile()");
+        LocalManagerExcelGridVo grid = getExcelGrid(category);
         List<String> columns = grid.getColumns();
         try (Workbook wb = new XSSFWorkbook(); ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             Sheet sheet = wb.createSheet(WorkbookUtil.createSafeSheetName(
@@ -155,7 +155,7 @@ public class ExcelDataSvcImpl implements ExcelDataSvc {
 
             // 데이터 행 = 그리드 행(컬럼 순서대로)
             int rowIdx = 1;
-            for (ExcelGridRowVo row : grid.getRows()) {
+            for (LocalManagerExcelGridRowVo row : grid.getRows()) {
                 Row dataRow = sheet.createRow(rowIdx++);
                 List<String> cells = row.getCells();
                 for (int i = 0; i < columns.size(); i++) {

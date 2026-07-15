@@ -2,14 +2,14 @@ package com.ohc.localmanager.dao;
 
 import java.util.List;
 
-import com.ohc.localmanager.dao.vo.ExcelDataVo;
+import com.ohc.localmanager.dao.vo.LocalManagerExcelDataVo;
 
 /**
  * 엑셀 데이터 DAO 인터페이스
  * @author 오현철
  * @date 2026.06.25
  */
-public interface ExcelDataDao {
+public interface LocalManagerExcelDataDao {
 
     /**
      * 테이블 초기화
@@ -21,14 +21,14 @@ public interface ExcelDataDao {
      * @param category 카테고리
      * @return 해당 카테고리의 데이터 리스트
      */
-    public List<ExcelDataVo> getExcelDataList(String category);
+    public List<LocalManagerExcelDataVo> getExcelDataList(String category);
 
     /**
      * 엑셀 데이터 단건 조회
      * @param seqNum 순번
      * @return 데이터 (없으면 null)
      */
-    public ExcelDataVo getExcelData(int seqNum);
+    public LocalManagerExcelDataVo getExcelData(int seqNum);
 
     /**
      * 엑셀 데이터 추가
