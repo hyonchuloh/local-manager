@@ -38,4 +38,11 @@ public interface LocalManagerExcelMetaSvc {
      */
     public int addExcelMeta(String category, String metaInfo, String createUser);
 
+    /**
+     * 엑셀 카테고리 삭제 (해당 카테고리의 데이터도 함께 삭제)
+     * @param category 카테고리
+     * @return 삭제 결과
+     */
+    public int deleteExcelMeta(String category);
+
 }

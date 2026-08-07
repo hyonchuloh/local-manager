@@ -127,6 +127,34 @@ public class LocalManagerExcelDataDaoImpl implements LocalManagerExcelDataDao {
     }
 
     /**
+     * 카테고리별 엑셀 데이터 건수 조회
+     */
+    @Override
+    public int countExcelData(String category) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 건수 조회 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 건수 조회 */");
+        sql.append("\n\tSELECT COUNT(*) FROM LOCAL_MANAGER_EXCEL_DB WHERE CATEGORY = ?");
+        logger.info("--- {}\n", sql.toString());
+        Integer count = jdbcTemplate.queryForObject(sql.toString(), Integer.class, category);
+        logger.info("--- (DAO) 엑셀 데이터 DB 건수 조회 완료");
+        return count == null ? 0 : count;
+    }
+
+    /**
+     * 카테고리에 속한 엑셀 데이터 전체 삭제
+     */
+    @Override
+    public int deleteExcelDataByCategory(String category) {
+        logger.info("--- (DAO) 엑셀 데이터 DB 카테고리 일괄 삭제 시작");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 카테고리 일괄 삭제 */");
+        sql.append("\n\tDELETE FROM LOCAL_MANAGER_EXCEL_DB WHERE CATEGORY = ?");
+        logger.info("--- {}\n", sql.toString());
+        int result = jdbcTemplate.update(sql.toString(), category);
+        logger.info("--- (DAO) 엑셀 데이터 DB 카테고리 일괄 삭제 완료");
+        return result;
+    }
+
+    /**
      * ResultSet -> LocalManagerExcelDataVo 매핑
      */
     private LocalManagerExcelDataVo mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {

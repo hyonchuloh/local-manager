@@ -56,5 +56,21 @@ public class LocalManagerExcelMetaCtl {
         logger.info("----------------------------------------");
         return "redirect:/excel";
     }
-    
+
+    /**
+     * 엑셀 카테고리 삭제 (해당 카테고리의 데이터도 함께 삭제)
+     */
+    @PostMapping("/excel/category/delete")
+    public String deleteCategory(
+        @RequestParam(value = "category", required = false) String category,
+        Model model) {
+        logger.info("----------------------------------------");
+        logger.info("--- (URL) /excel/category/delete (POST)");
+        logger.info("--- (PARAM) category: {}", category);
+        int result = excelMetaSvc.deleteExcelMeta(category);
+        logger.info("--- (RESULT) {}", result);
+        logger.info("----------------------------------------");
+        return "redirect:/excel";
+    }
+
 }

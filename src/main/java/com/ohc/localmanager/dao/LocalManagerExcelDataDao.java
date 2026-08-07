@@ -55,4 +55,18 @@ public interface LocalManagerExcelDataDao {
      */
     public int deleteExcelData(int seqNum);
 
+    /**
+     * 카테고리별 엑셀 데이터 건수 조회
+     * @param category 카테고리
+     * @return 데이터 건수
+     */
+    public int countExcelData(String category);
+
+    /**
+     * 카테고리에 속한 엑셀 데이터 전체 삭제 (카테고리 삭제 시 연계)
+     * @param category 카테고리
+     * @return 삭제 결과
+     */
+    public int deleteExcelDataByCategory(String category);
+
 }

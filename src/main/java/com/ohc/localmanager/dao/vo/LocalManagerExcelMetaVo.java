@@ -12,6 +12,7 @@ public class LocalManagerExcelMetaVo {
     private String metaInfo;
     private String createDate;
     private String createUser;
+    private int rowCount;
 
     // Getters and Setters
     public String getCategory() {
@@ -37,6 +38,12 @@ public class LocalManagerExcelMetaVo {
     }
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+    public int getRowCount() {
+        return rowCount;
+    }
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
     }
 
 }

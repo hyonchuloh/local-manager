@@ -8,7 +8,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import jakarta.annotation.PostConstruct;
-import com.ohc.localmanager.svc.CallbookSvc;
 import com.ohc.localmanager.svc.LocalManagerExcelMetaSvc;
 import com.ohc.localmanager.svc.LocalManagerExcelDataSvc;
 
@@ -16,12 +15,10 @@ import com.ohc.localmanager.svc.LocalManagerExcelDataSvc;
 public class LocalManagerApplication extends SpringBootServletInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalManagerApplication.class);
-    private final CallbookSvc callbookSvc;
     private final LocalManagerExcelMetaSvc excelMetaSvc;
     private final LocalManagerExcelDataSvc excelDataSvc;
 
-    public LocalManagerApplication(CallbookSvc callbookSvc, LocalManagerExcelMetaSvc excelMetaSvc, LocalManagerExcelDataSvc excelDataSvc) {
-        this.callbookSvc = callbookSvc;
+    public LocalManagerApplication(LocalManagerExcelMetaSvc excelMetaSvc, LocalManagerExcelDataSvc excelDataSvc) {
         this.excelMetaSvc = excelMetaSvc;
         this.excelDataSvc = excelDataSvc;
     }
@@ -43,7 +40,6 @@ public class LocalManagerApplication extends SpringBootServletInitializer {
     public void initDatabase() {
         logger.info("----------------------------------------");
         logger.info("--- (APPLICATION) LocalManagerApplication.initDatabase()");
-        callbookSvc.initialize();
         excelMetaSvc.initialize();
         excelDataSvc.initialize();
         logger.info("----------------------------------------");
