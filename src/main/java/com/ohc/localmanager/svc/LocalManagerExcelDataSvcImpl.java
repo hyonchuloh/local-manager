@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -72,6 +73,8 @@ public class LocalManagerExcelDataSvcImpl implements LocalManagerExcelDataSvc {
             row.setUpdateUser(data.getUpdateUser());
             rows.add(row);
         }
+        // 첫번째 컬럼 기준 오름차순 정렬
+        rows.sort(Comparator.comparing(row -> row.getCells().isEmpty() ? "" : row.getCells().get(0)));
         grid.setRows(rows);
 
         return grid;

@@ -58,7 +58,7 @@ public class LocalManagerExcelDataDaoImpl implements LocalManagerExcelDataDao {
     public List<LocalManagerExcelDataVo> getExcelDataList(String category) {
         logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 시작");
         StringBuffer sql = new StringBuffer("\n\n\t/* 엑셀 데이터 DB 카테고리별 조회 */");
-        sql.append("\n\tSELECT SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER FROM LOCAL_MANAGER_EXCEL_DB WHERE CATEGORY = ? ORDER BY SEQ_NUM");
+        sql.append("\n\tSELECT SEQ_NUM, CATEGORY, DATA, UPDATE_DATE, UPDATE_USER FROM LOCAL_MANAGER_EXCEL_DB WHERE CATEGORY = ? ORDER BY 1");
         logger.info("--- {}\n", sql.toString());
         List<LocalManagerExcelDataVo> list = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> mapRow(rs), category);
         logger.info("--- (DAO) 엑셀 데이터 DB 카테고리별 조회 완료");
