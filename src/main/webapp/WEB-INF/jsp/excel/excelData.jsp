@@ -17,6 +17,12 @@
             const rows = table.getElementsByTagName("tr");
 
             for (let i = 1; i < rows.length; i++) {
+                // 신규 입력 행은 필터링 대상에서 제외하고 항상 노출
+                if (rows[i].id === "newRecordRow") {
+                    rows[i].style.display = "";
+                    continue;
+                }
+
                 const cells = rows[i].getElementsByTagName("td");
                 let match = false;
 
@@ -106,8 +112,8 @@
             </c:forEach>
             <th>액션</th>
         </tr>
-        <!-- 신규 입력 행 -->
-        <tr>
+        <!-- 신규 입력 행 (검색 필터링 제외 대상) -->
+        <tr id="newRecordRow">
             <c:forEach var="col" items="${grid.columns}">
                 <c:choose>
                     <%-- 수정일자/수정자는 입력받지 않고 저장 시 서버가 자동 생성 --%>
