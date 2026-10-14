@@ -38,12 +38,14 @@ public class LocalManagerExcelDataCtl {
     @GetMapping("/excel/data")
     public String getExcelData(
         @RequestParam(value = "category", required = false) String category,
+        @RequestParam(value = "keyword", required = false) String keyword,
         Model model) {
         logger.info("----------------------------------------");
         logger.info("--- (URL) /excel/data (GET)");
-        logger.info("--- (PARAM) category: {}", category);
+        logger.info("--- (PARAM) category: {}, keyword: {}", category, keyword);
         logger.info("----------------------------------------");
         model.addAttribute("grid", excelDataSvc.getExcelGrid(category));
+        model.addAttribute("keyword", keyword == null ? "" : keyword);
         return "excel/excelData";
     }
 
@@ -55,6 +57,7 @@ public class LocalManagerExcelDataCtl {
         @RequestParam(value = "category", required = false) String category,
         @RequestParam(value = "data", required = false) String data,
         @RequestParam(value = "updateUser", required = false, defaultValue = "admin") String updateUser,
+        @RequestParam(value = "keyword", required = false) String keyword,
         Model model) {
         logger.info("----------------------------------------");
         logger.info("--- (URL) /excel/data/insert (POST)");
@@ -62,7 +65,7 @@ public class LocalManagerExcelDataCtl {
         int result = excelDataSvc.addExcelData(category, data, updateUser);
         logger.info("--- (RESULT) {}", result);
         logger.info("----------------------------------------");
-        return redirectToGrid(category);
+        return redirectToGrid(category, keyword);
     }
 
     /**
@@ -74,6 +77,7 @@ public class LocalManagerExcelDataCtl {
         @RequestParam(value = "category", required = false) String category,
         @RequestParam(value = "data", required = false) String data,
         @RequestParam(value = "updateUser", required = false, defaultValue = "admin") String updateUser,
+        @RequestParam(value = "keyword", required = false) String keyword,
         Model model) {
         logger.info("----------------------------------------");
         logger.info("--- (URL) /excel/data/update (POST)");
@@ -81,7 +85,7 @@ public class LocalManagerExcelDataCtl {
         int result = excelDataSvc.updateExcelData(seqNum, category, data, updateUser);
         logger.info("--- (RESULT) {}", result);
         logger.info("----------------------------------------");
-        return redirectToGrid(category);
+        return redirectToGrid(category, keyword);
     }
 
     /**
@@ -91,6 +95,7 @@ public class LocalManagerExcelDataCtl {
     public String deleteData(
         @PathVariable("seqNum") int seqNum,
         @RequestParam(value = "category", required = false) String category,
+        @RequestParam(value = "keyword", required = false) String keyword,
         Model model) {
         logger.info("----------------------------------------");
         logger.info("--- (URL) /excel/data/delete (POST)");
@@ -98,7 +103,7 @@ public class LocalManagerExcelDataCtl {
         int result = excelDataSvc.deleteExcelData(seqNum);
         logger.info("--- (RESULT) {}", result);
         logger.info("----------------------------------------");
-        return redirectToGrid(category);
+        return redirectToGrid(category, keyword);
     }
 
     /**
@@ -128,9 +133,10 @@ public class LocalManagerExcelDataCtl {
      * 한글 카테고리는 그대로 두면 Location 헤더(ISO-8859-1)에 기록되지 못해
      * redirect 자체가 누락되므로, UTF-8 퍼센트 인코딩하여 ASCII로 만든다.
      */
-    private String redirectToGrid(String category) {
+    private String redirectToGrid(String category, String keyword) {
         String encoded = URLEncoder.encode(category == null ? "" : category, StandardCharsets.UTF_8);
-        return "redirect:/excel/data?category=" + encoded;
+        String encodedKeyword = URLEncoder.encode(keyword == null ? "" : keyword, StandardCharsets.UTF_8);
+        return "redirect:/excel/data?category=" + encoded + "&keyword=" + encodedKeyword;
     }
 
 }

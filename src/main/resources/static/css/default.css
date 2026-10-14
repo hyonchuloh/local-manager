@@ -32,7 +32,8 @@
 }
 
 body {
-	font-family:'d2coding';
+	font-family:'Malgun Gothic';
+	letter-spacing: -0.5px;
 	font-size: 10pt;
 	line-height: 180%;
 	margin: 0px 0px;
@@ -45,7 +46,8 @@ body {
 }
 
 h1 {
-	font-family:'NanumHuman';
+	font-family: 'NanumHuman';
+	letter-spacing: 0px;
 	background-color: #222222;
 	color: #FCFCF0;		   /* 글자색 */
 	width: auto;				/* 너비: 아래 margin 계산으로 뷰포트 전체까지 확장 */

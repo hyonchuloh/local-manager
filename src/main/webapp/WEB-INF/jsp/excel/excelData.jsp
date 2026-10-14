@@ -43,12 +43,41 @@
             }).join(", ");
         }
 
+        // 현재 검색어를 폼에 담아 redirect 후에도 유지되도록 함
+        function setKeyword(form) {
+            form.keyword.value = document.getElementById("searchInput").value;
+        }
+
+        // 화면 로드 시 전달받은 검색어가 있으면 필터링 적용
+        window.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById("searchInput").value) {
+                searchTable();
+            }
+        });
+
+        // 데이터 행 더블클릭 시 해당 행의 값을 신규 입력 행(ADD)에 복사
+        document.addEventListener("dblclick", function (e) {
+            const row = e.target.closest("tr");
+            if (!row || row.id === "newRecordRow" || !row.querySelector(".edit-cell")) {
+                return;
+            }
+            const src = row.querySelectorAll(".edit-cell");
+            const dst = document.querySelectorAll(".new-cell");
+            for (let i = 0; i < dst.length && i < src.length; i++) {
+                // (자동생성) 셀은 편집 불가이므로 건너뜀
+                if (dst[i].isContentEditable) {
+                    dst[i].textContent = src[i].textContent.trim();
+                }
+            }
+        });
+
         function insertItem() {
             const cells = document.querySelectorAll(".new-cell");
             const form = document.getElementById("itemForm");
             form.action = "/excel/data/insert";
             form.method = "post";
             form.category.value = CATEGORY;
+            setKeyword(form);
             form.data.value = collectData(cells);
             form.submit();
         }
@@ -59,6 +88,7 @@
             form.action = "/excel/data/update/" + seqNum;
             form.method = "post";
             form.category.value = CATEGORY;
+            setKeyword(form);
             form.data.value = collectData(cells);
             form.submit();
         }
@@ -69,6 +99,7 @@
                 form.action = "/excel/data/delete/" + seqNum;
                 form.method = "post";
                 form.category.value = CATEGORY;
+                setKeyword(form);
                 form.submit();
             }
         }
@@ -100,7 +131,7 @@
     </h1>
     <ul>
         <li>
-            🔎 검색 <input type="text" id="searchInput" onkeyup="searchTable()" /> |
+            🔎 검색 <input type="text" id="searchInput" value="<c:out value='${keyword}'/>" onkeyup="searchTable()" /> |
             📥 엑셀 다운로드 <input type="button" value="DOWNLOAD" onclick="downloadExcel()" />
         </li>
     </ul>
@@ -153,6 +184,7 @@
     <form method="post" id="itemForm">
         <input type="hidden" name="category" value="" />
         <input type="hidden" name="data" value="" />
+        <input type="hidden" name="keyword" value="" />
     </form>
 </body>
 </html>
